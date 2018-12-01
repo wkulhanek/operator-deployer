@@ -1,0 +1,20 @@
+---
+apiVersion: authorization.openshift.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    rbac.authorization.k8s.io/aggregate-to-admin: "true"
+  name: "{{ _operator_name }}-admin-rules"
+rules:
+- apiGroups:
+  - "{{ _operator_group }}"
+  resources:
+  - "{{ _operator_plural_name }}"
+  verbs:
+  - create
+  - update
+  - delete
+  - get
+  - list
+  - watch
+  - patch

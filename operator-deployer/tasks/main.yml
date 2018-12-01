@@ -1,0 +1,52 @@
+---
+# tasks file for operator-deployer
+- name: Set CRD to {{ _operator_state }}
+  k8s:
+    state: "{{ _operator_state }}"
+    definition: "{{ lookup('template', './templates/crd.j2') | from_yaml }}"
+
+- name: Set ClusterRole (Admin) to {{ _operator_state }}
+  k8s:
+    state: "{{ _operator_state }}"
+    definition: "{{ lookup('template', './templates/clusterrole_admin.j2') | from_yaml }}"
+
+- name: Set Project to {{ _operator_state }}
+  k8s:
+    state: "{{ _operator_state }}"
+    name: "{{ operator_namespace }}"
+    api_version: v1
+    kind: Namespace
+
+- name: Set Service Account to {{ _operator_state }}
+  k8s:
+    state: "{{ _operator_state }}"
+    definition: "{{ lookup('template', './templates/service_account.j2') | from_yaml }}"
+
+- name: Cluster Scoped Operator Installation
+  when: _operator_kind|d("namespaced") == "clusterwide"
+  block:
+    - name: Set ClusterRole (Operator) to {{ _operator_state }}
+      k8s:
+        state: "{{ _operator_state }}"
+        definition: "{{ lookup('template', './templates/clusterrole.j2') | from_yaml }}"
+    - name: Set ClusterRoleBinding to {{ _operator_state }}
+      k8s:
+        state: "{{ _operator_state }}"
+        definition: "{{ lookup('template', './templates/clusterrolebinding.j2') | from_yaml }}"
+
+- name: Namespace Scoped Operator Installation
+  when: _operator_kind|d("namespaced") == "namespaced"
+  block:
+    - name: Set Role (Operator) to {{ _operator_state }}
+      k8s:
+        state: "{{ _operator_state }}"
+        definition: "{{ lookup('template', './templates/role.j2') | from_yaml }}"
+    - name: Set RoleBinding to {{ _operator_state }}
+      k8s:
+        state: "{{ _operator_state }}"
+        definition: "{{ lookup('template', './templates/rolebinding.j2') | from_yaml }}"
+
+- name: Set Operator Deployment to {{ _operator_state }}
+  k8s:
+    state: "{{ _operator_state }}"
+    definition: "{{ lookup('template', './templates/operator.j2') | from_yaml }}"

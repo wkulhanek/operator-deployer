@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ _operator_name }}-operator"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: "{{ _operator_name }}-operator"
+  template:
+    metadata:
+      labels:
+        name: "{{ _operator_name }}-operator"
+    spec:
+      serviceAccountName: "{{ _operator_name }}-operator"
+      containers:
+        - name: "{{ _operator_name }}-operator"
+          image: "{{ _operator_image }}"
+          ports:
+          - containerPort: 60000
+            name: metrics
+          imagePullPolicy: Always
+          env:
+            - name: WATCH_NAMESPACE
+{% if _operator_kind|d("namespaced") == "namespaced"} %}
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+{% else %}
+              value: ""
+{% endif %}
+            - name: OPERATOR_NAME
+              value: "{{ _operator_name }}-operator"

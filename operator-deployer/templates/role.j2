@@ -1,0 +1,44 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: "{{ _operator_name }}-operator"
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - services
+  - endpoints
+  - persistentvolumeclaims
+  - configmaps
+  - secrets
+  - routes
+  - serviceaccounts
+  verbs:
+  - create
+  - update
+  - delete
+  - get
+  - list
+  - watch
+  - patch
+  # Enable this if operator-metering is installed in your cluster.
+  #- apiGroups:
+  #- monitoring.coreos.com
+  #resources:
+  #- servicemonitors
+  #verbs:
+  #- "get"
+  #- "create"
+- apiGroups:
+  - "{{ _operator_group }}"
+  resources:
+  - "{{ _operator_plural_name }}"
+  verbs:
+  - create
+  - update
+  - delete
+  - get
+  - list
+  - watch
+  - patch

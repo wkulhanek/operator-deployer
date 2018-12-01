@@ -1,0 +1,13 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: "{{ _operator_plural_name }}.{{ _operator_group }}"
+spec:
+  group: "{{ _operator_group }}"
+  names:
+    kind: "{{ _operator_name|capitalize }}"
+    listKind: "{{ _operator_name|capitalize }}List"
+    plural: "{{ _operator_plural_name }}"
+    singular: "{{ _operator_name }}"
+  scope: Namespaced
+  version: v1alpha1
