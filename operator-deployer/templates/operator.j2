@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "{{ _operator_name }}-operator"
+  namespace: "{{ _operator_namespace }}"
 spec:
   replicas: 1
   selector:
@@ -22,7 +23,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: WATCH_NAMESPACE
-{% if _operator_kind|d("namespaced") == "namespaced"} %}
+{% if _operator_kind|d("namespaced") == "namespaced" %}
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace

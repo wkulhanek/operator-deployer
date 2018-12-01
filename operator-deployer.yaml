@@ -6,9 +6,9 @@
   tasks:
   - name: Deploy Operator
     include_role:
-      name: ./roles/operator-deployer
+      name: ./operator-deployer
     vars:
-      _operator_state: present
+      _operator_state: "{{ operator_state }}"
       _operator_name: "{{ operator_name }}"
       _operator_plural_name: "{{ operator_plural_name }}"
       _operator_group: "{{ operator_group }}"
