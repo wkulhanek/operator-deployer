@@ -10,13 +10,6 @@
     state: "{{ _operator_state }}"
     definition: "{{ lookup('template', './templates/clusterrole_admin.j2') | from_yaml }}"
 
-- name: Set Project to {{ _operator_state }}
-  k8s:
-    state: "{{ _operator_state }}"
-    name: "{{ operator_namespace }}"
-    api_version: v1
-    kind: Namespace
-
 - name: Set Service Account to {{ _operator_state }}
   k8s:
     state: "{{ _operator_state }}"
