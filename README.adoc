@@ -48,7 +48,6 @@ Instructions for obtaining the CLI are at https://docs.openshift.com/container-p
 
 Clone this repo and switch to the directory:
 
-+
 [source,sh]
 ----
 git clone https://github.com/wkulhanek/smooth-operator.git
