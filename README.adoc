@@ -108,7 +108,7 @@ ansible-playbook ./smooth-operator.yaml \
 [source,sh]
 ----
 oc new-project gogs --display-name="Gogs"
-oc create -f ./example/gogs.yaml
+oc create -f ./examples/gogs.yaml
 ----
 
 === Gitea
@@ -135,7 +135,7 @@ ansible-playbook ./smooth-operator.yaml \
 [source,sh]
 ----
 oc new-project gitea --display-name="Gitea"
-oc create -f ./example/gitea.yaml
+oc create -f ./examples/gitea.yaml
 ----
 
 === SonarQube
@@ -161,7 +161,7 @@ ansible-playbook ./smooth-operator.yaml \
 +
 [source,sh]
 ----
-oc create -f ./example/sonarqube.yaml
+oc create -f ./examples/sonarqube.yaml
 ----
 
 === Nexus
@@ -187,5 +187,5 @@ ansible-playbook ./smooth-operator.yaml \
 +
 [source,sh]
 ----
-oc create -f ./example/nexus.yaml
+oc create -f ./examples/nexus.yaml
 ----
