@@ -4,6 +4,7 @@ _operator_state: present
 _operator_name: unnamed
 _operator_plural_name: unnameds
 _operator_group: gpte.opentlc.com
+_operator_version: v1alpha1
 _operator_kind: namespaced
 _operator_namespace: gpte-operators
 _operator_image: quay.io/wkulhanek/gitea-operator:v0.0.1

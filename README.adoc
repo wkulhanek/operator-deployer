@@ -1,0 +1,192 @@
+= Smooth Operator
+
+== Overview
+
+*Smooth Operator* is an Ansible Playbook to deploy an Operator into an OpenShift Cluster. It supports both _namespaced_ and _clusterwide_ Operators.
+
+The Operator container image needs to be available to be deployed.
+
+This playbook sets up:
+
+* Custom Resource Definition
+* Service Account for the Operator Pod
+* Cluster Role (if clusterwide operator)
+* Cluster Role Binding (if clusterwide operator)
+* Cluster Role Admin (to automatically grant permissions to project administrators to create Custom Resources )
+* Role (if namespaced operator)
+* Role Binding (if namespaced operator)
+* Operator Deployment
+
+== Installation and Preparation
+
+=== Dependencies
+
+This Ansible Playbook requires the following dependencies:
+
+* Ansible 2.6 or higher (for the *k8s* module)
+* *openshift* Python module
+* Operator container image in a registry that is accessible from the OpenShift cluster (quay.io or docker.io for example)
+* Current session needs to be logged into the cluster with a user id that has *cluster-admin* permission.
+* The project/namespace into which to install the operator must exist.
+
+It is recommended to set up a Python VirtualEnv to avoid collisions with other installed python modules.
+
+[source,sh]
+----
+pip install virtualenv
+virtualenv $HOME/ve_operators
+source $HOME/ve_operators/bin/activate
+pip install ansible
+pip install openshift
+----
+
+Also you need to need the OpenShift CLI installed on your machine and be logged into the cluster with a user ID that has *cluster-admin* permission.
+
+Instructions for obtaining the CLI are at https://docs.openshift.com/container-platform/3.11/cli_reference/get_started_cli.html.
+
+=== Obtaining the code
+
+Clone this repo and switch to the directory:
+
++
+[source,sh]
+----
+git clone https://github.com/wkulhanek/smooth-operator.git
+cd smooth-operator
+----
+
+== Usage
+
+* To install an Operator in an OpenShift Cluster run the playbook with the parameters to set up the Operator.
++
+[source,sh]
+----
+ansible-playbook ./smooth-operator.yaml \
+  -e "operator_state=present" \
+  -e "operator_name=gogs" \
+  -e "operator_plural_name=gogs" \
+  -e "operator_group=gpte.opentlc.com" \
+  -e "operator_version=v1alpha1" \
+  -e "operator_kind=clusterwide" \
+  -e "operator_namespace=gpte-operators" \
+  -e "operator_image=quay.io/wkulhanek/gogs-operator:v0.0.1"
+----
+
+.Parameters
+|===
+|Parameter|Value|Example
+|operator_name|Name of the Operator (and the `Kind` of API Object). *Must* match what the operator is watching for|sonarqube
+|operator_plural_name|Name of multiple Kind instances. *Must* match what the operator is watching for|sonarqubes
+|operator_group|API Group for the Operator.  *Must* match what the operator is watching for|gpte.opentlc.com
+|operator_kind|`clusterwide` or `namespaced`|
+|operator_namespace|Project name for the Operator pod to run in|cluster-operators
+|operator_image|Container image for the operator pod|quay.io/wkulhanek/gogs-operator:v0.0.1
+|===
+
+== Examples
+
+=== Gogs
+
+* To deploy a Clusterwide Gogs Server (with PostgreSQL) database to project `cluster-operators`:
++
+[source,sh]
+----
+oc new-project cluster-operators --display-name="Clusterwide Operators"
+
+ansible-playbook ./smooth-operator.yaml \
+  -e "operator_state=present" \
+  -e "operator_name=gogs" \
+  -e "operator_plural_name=gogs" \
+  -e "operator_group=gpte.opentlc.com" \
+  -e "operator_version=v1alpha1" \
+  -e "operator_kind=clusterwide" \
+  -e "operator_namespace=cluster-operators" \
+  -e "operator_image=quay.io/wkulhanek/gogs-operator:v0.0.1"
+----
+
+* Deploy a Gogs in a new project
++
+[source,sh]
+----
+oc new-project gogs --display-name="Gogs"
+oc create -f ./example/gogs.yaml
+----
+
+=== Gitea
+
+* To deploy a Clusterwide Gitea Server (with PostgreSQL) database to project `cluster-operators`:
++
+[source,sh]
+----
+oc new-project cluster-operators --display-name="Clusterwide Operators"
+
+ansible-playbook ./smooth-operator.yaml \
+  -e "operator_state=present" \
+  -e "operator_name=gitea" \
+  -e "operator_plural_name=giteas" \
+  -e "operator_group=gpte.opentlc.com" \
+  -e "operator_version=v1alpha1" \
+  -e "operator_kind=clusterwide" \
+  -e "operator_namespace=cluster-operators" \
+  -e "operator_image=quay.io/wkulhanek/gitea-operator:v0.0.1"
+----
+
+* Deploy a Gitea in a new project
++
+[source,sh]
+----
+oc new-project gitea --display-name="Gitea"
+oc create -f ./example/gitea.yaml
+----
+
+=== SonarQube
+
+* To deploy a namespaced SonarQube operator (with PostgreSQL) database to project `sonarqube`:
++
+[source,sh]
+----
+oc new-project sonarqube --display-name="SonarQube"
+
+ansible-playbook ./smooth-operator.yaml \
+  -e "operator_state=present" \
+  -e "operator_name=sonarqube" \
+  -e "operator_plural_name=sonarqubes" \
+  -e "operator_group=gpte.opentlc.com" \
+  -e "operator_version=v1alpha1" \
+  -e "operator_kind=namespaced" \
+  -e "operator_namespace=sonarqube" \
+  -e "operator_image=quay.io/wkulhanek/sonarqube-operator:v0.0.1"
+----
+
+* Deploy a Sonarqube in the *same* project
++
+[source,sh]
+----
+oc create -f ./example/sonarqube.yaml
+----
+
+=== Nexus
+
+* To deploy a namespaced Nexus operator `nexus`:
++
+[source,sh]
+----
+oc new-project nexus --display-name="Nexus"
+
+ansible-playbook ./smooth-operator.yaml \
+  -e "operator_state=present" \
+  -e "operator_name=nexus" \
+  -e "operator_plural_name=nexus" \
+  -e "operator_group=gpte.opentlc.com" \
+  -e "operator_version=v1alpha1" \
+  -e "operator_kind=namespaced" \
+  -e "operator_namespace=nexus" \
+  -e "operator_image=quay.io/wkulhanek/nexus-operator:v0.0.1"
+----
+
+* Deploy a Nexus in the *same* project
++
+[source,sh]
+----
+oc create -f ./example/nexus.yaml
+----

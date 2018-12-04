@@ -6,12 +6,13 @@
   tasks:
   - name: Deploy Operator
     include_role:
-      name: ./operator-deployer
+      name: ./smooth-operator
     vars:
       _operator_state: "{{ operator_state }}"
       _operator_name: "{{ operator_name }}"
       _operator_plural_name: "{{ operator_plural_name }}"
       _operator_group: "{{ operator_group }}"
+      _operator_version: "{{ operator_version }}"
       _operator_kind: "{{ operator_kind }}"
       _operator_namespace: "{{ operator_namespace }}"
       _operator_image: "{{ operator_image }}"
