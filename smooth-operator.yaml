@@ -11,6 +11,7 @@
       _operator_state: "{{ operator_state }}"
       _operator_name: "{{ operator_name }}"
       _operator_plural_name: "{{ operator_plural_name }}"
+      _operator_short_name: "{{ operator_short_name|d('') }}"
       _operator_group: "{{ operator_group }}"
       _operator_version: "{{ operator_version }}"
       _operator_kind: "{{ operator_kind }}"

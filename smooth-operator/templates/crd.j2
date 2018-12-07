@@ -9,5 +9,9 @@ spec:
     listKind: "{{ _operator_name|capitalize }}List"
     plural: "{{ _operator_plural_name }}"
     singular: "{{ _operator_name }}"
+{% if _operator_short_name|d("") != "" %}
+    shortNames:
+    - "{{ _operator_short_name }}
+{% endif %}
   scope: Namespaced
   version: "{{ _operator_version }}"
