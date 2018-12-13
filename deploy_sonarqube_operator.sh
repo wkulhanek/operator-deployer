@@ -9,4 +9,4 @@ ansible-playbook ./smooth-operator.yaml \
   -e "operator_version=v1alpha1" \
   -e "operator_kind=clusterwide" \
   -e "operator_namespace=gpte-operators" \
-  -e "operator_image=quay.io/wkulhanek/sonarqube-operator:v0.0.1"
+  -e "operator_image=quay.io/wkulhanek/sonarqube-operator:v0.0.2"
