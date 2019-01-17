@@ -33,7 +33,7 @@ It is recommended to set up a Python VirtualEnv to avoid collisions with other i
 
 [source,sh]
 ----
-yum -y install python-dev
+yum -y install python-dev python-pip
 pip install virtualenv
 virtualenv $HOME/ve_operators
 source $HOME/ve_operators/bin/activate
