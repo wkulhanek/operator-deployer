@@ -34,6 +34,7 @@ rules:
   - "{{ operator_group }}"
   resources:
   - "{{ _operator_plural_name }}"
+  - "{{ _operator_plural_name }}/status"
   verbs:
   - create
   - update
