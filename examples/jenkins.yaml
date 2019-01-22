@@ -1,0 +1,7 @@
+apiVersion: gpte.opentlc.com/v1alpha1
+kind: Jenkins
+metadata:
+  name: jenkins
+spec:
+  jenkinsVolumeSize: 5Gi
+  jenkinsDisableAdministrativeMonitors: True
