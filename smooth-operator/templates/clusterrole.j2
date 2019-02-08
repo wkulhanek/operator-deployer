@@ -13,9 +13,20 @@ rules:
   - events
   - configmaps
   - secrets
-  - routes
   - serviceaccounts
   - rolebindings
+  verbs:
+  - create
+  - update
+  - delete
+  - get
+  - list
+  - watch
+  - patch
+- apiGroups:
+  - route.openshift.io
+  resources:
+  - routes
   verbs:
   - create
   - update
