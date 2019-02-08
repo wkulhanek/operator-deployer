@@ -24,6 +24,12 @@ rules:
   - watch
   - patch
 - apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+- apiGroups:
   - route.openshift.io
   resources:
   - routes
