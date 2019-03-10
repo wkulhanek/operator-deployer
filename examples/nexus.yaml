@@ -5,3 +5,7 @@ metadata:
 spec:
   nexusVolumeSize: 5Gi
   nexusSsl: True
+  nexusCpuRequest: 500m
+  nexusCpuLimit: 2
+  nexusMemoryRequest: 2Gi
+  nexusMemoryLimit: 3Gi
