@@ -15,5 +15,9 @@ spec:
 {% endif %}
   scope: Namespaced
   version: "{{ _operator_version }}"
+  versions:
+  - name: "{{ _operator_version }}"
+    served: true
+    storage: true
   subresources:
     status: {}
