@@ -17,9 +17,6 @@ spec:
       containers:
         - name: "{{ _operator_name }}-operator"
           image: "{{ _operator_image }}"
-          ports:
-          - containerPort: 60000
-            name: metrics
           imagePullPolicy: IfNotPresent
           env:
             - name: WATCH_NAMESPACE
