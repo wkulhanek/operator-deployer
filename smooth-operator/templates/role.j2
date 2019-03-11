@@ -35,6 +35,21 @@ rules:
   - list
   - watch
   - patch
+  - apiGroups:
+    - apps
+    resources:
+    - deployments
+    - daemonsets
+    - replicasets
+    - statefulsets
+    verbs:
+    - create
+    - update
+    - delete
+    - get
+    - list
+    - watch
+    - patch
   # Enable this if operator-metering is installed in your cluster.
   #- apiGroups:
   #- monitoring.coreos.com
