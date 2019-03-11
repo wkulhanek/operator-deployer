@@ -49,6 +49,21 @@ rules:
   - get
   - create
 - apiGroups:
+  - apps
+  resources:
+  - deployments
+  - daemonsets
+  - replicasets
+  - statefulsets
+  verbs:
+  - create
+  - update
+  - delete
+  - get
+  - list
+  - watch
+  - patch
+- apiGroups:
   - "{{ operator_group }}"
   resources:
   - "{{ _operator_plural_name }}"
