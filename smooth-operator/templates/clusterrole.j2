@@ -76,3 +76,11 @@ rules:
   - list
   - watch
   - patch
+- apiGroups:
+  - apps
+  resourceNames:
+  - "{{ _operator-name }}-operator"
+  resources:
+  - deployments/finalizers
+  verbs:
+  - update
