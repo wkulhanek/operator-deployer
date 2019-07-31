@@ -8,4 +8,4 @@ _operator_group: gpte.opentlc.com
 _operator_version: v1alpha1
 _operator_kind: namespaced
 _operator_namespace: my-operators
-_operator_image: quay.io/wkulhanek/gitea-operator:v0.0.1
+_operator_image: quay.io/gpte-devopsautomation/gitea-operator:v0.9
