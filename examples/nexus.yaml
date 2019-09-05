@@ -1,7 +1,7 @@
 apiVersion: gpte.opentlc.com/v1alpha1
 kind: Nexus
 metadata:
-  name: nexus3
+  name: nexus
 spec:
   nexusVolumeSize: 10Gi
   nexusSsl: True
